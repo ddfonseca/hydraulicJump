@@ -1,0 +1,6 @@
+#!/bin/bash
+
+mv fvSchemes fvSchemes.kEpsilon
+mv fvSolution fvSolution.kEpsilon
+mv fvSchemes.omega fvSchemes
+mv fvSolution.omega fvSolution

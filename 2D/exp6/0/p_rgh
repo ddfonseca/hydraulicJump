@@ -1,0 +1,102 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  4.0                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p_rgh;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [1 -1 -2 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    inlet_water
+    {
+        type            zeroGradient;
+
+    }
+
+    outlet_water
+    {
+        type            fixedMean;
+        meanValue	    2933.19;
+        value		    uniform 0;
+    }
+
+    outlet_air
+    {
+        type            totalPressure;
+        p0              uniform 0;
+    }
+
+    walls
+    {
+        type            zeroGradient;
+        //type            fixedFluxPressure;
+        //value           uniform 0;
+    }
+
+    atmosphere
+    {
+        type            totalPressure;
+        p0              uniform 0;
+    }
+
+    defaultFaces
+    {
+        type            empty;
+    }
+}
+
+/*
+fixedMean:this boundary condition extrapolates field to the patch using the near-cell
+          values and adjusts the distribution to match the specified, optionally
+          time-varying, mean value.
+
+Usage
+    \table
+        Property     | Description             | Required    | Default value
+        meanValue    | mean value Function1    | yes         |
+    \endtable
+
+    Example of the boundary condition specification:
+    \verbatim
+    <patchName>
+    {
+        type            fixedMean;
+        meanValue       1.0;
+    }
+    \endverbatim
+
+*\
+
+/*
+
+totalPressure:This boundary condition provides a total pressure condition.  Four
+    variants are possible:
+
+    1. incompressible subsonic:
+        \f[
+            p_p = p_0 - 0.5 |U|^2
+        \f]
+        where
+        \vartable
+            p_p     | incompressible pressure at patch [m2/s2]
+            p_0     | incompressible total pressure [m2/s2]
+            U       | velocity
+        \endvartable
+
+*\
+
+
+// ************************************************************************* //
